@@ -1,0 +1,34 @@
+{
+  "name": "movie-shelf-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Personal movie-recommendation MCP server backed by IMDb datasets",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/cli/mcp-stdio.js",
+    "mcp": "tsx src/cli/mcp-stdio.ts",
+    "test": "tsx --test \"test/**/*.test.ts\"",
+    "import:imdb": "tsx --env-file-if-exists=.env src/cli/import-imdb.ts",
+    "import:languages": "tsx --env-file-if-exists=.env src/cli/import-languages.ts",
+    "import:keywords": "tsx --env-file-if-exists=.env src/cli/import-keywords.ts",
+    "import:watched": "tsx src/cli/import-watched.ts",
+    "start:http": "node dist/cli/mcp-http.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "better-sqlite3": "^13.0.3",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
