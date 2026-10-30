@@ -44,6 +44,19 @@ mood, keywords, year and rating.
 | `add_to_watchlist` / `remove_from_watchlist` | Maintain the watchlist |
 | `list_watchlist` | Browse the watchlist (newest first, or `sort: "rating"`) |
 
+### Prompt shortcuts
+
+The server also exposes MCP prompts, which clients show as slash commands. In Claude Code they appear as
+`/mcp__movie-shelf__<name>`; in Claude Desktop, under the attachments (plus) menu. Support varies by client,
+and some only use tools.
+
+| Prompt | What it does |
+| --- | --- |
+| `pick-something` | Asks a few quick questions (movie or series, mood, language, time, genres to avoid), then recommends |
+| `tonight` | Three random good unwatched picks with no questions (optional `type`) |
+| `from-watchlist` | Picks the best next watch from your watchlist (optional `mood`) |
+| `binge-series` | Top unwatched series (optional `language`, `genre`) |
+
 ## Requirements
 
 - Node.js 20 or newer
@@ -262,6 +275,7 @@ src/languages/              language normalisation, Wikidata + TMDB clients
 src/keywords/import.ts      TMDB keyword import (resumable)
 src/shelf/                  tool logic: filters, title resolution, genres, moods
 src/mcp/server.ts           MCP tool definitions
+src/mcp/prompts.ts          MCP prompt shortcuts (slash commands)
 src/mcp/http.ts             Streamable HTTP handler (stateless, bearer / ?token= auth, /health)
 src/watched/parse.ts        IMDb ratings CSV + title-list parsing
 src/cli/                    entry points for imports and the stdio / HTTP servers

@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { CATALOGUE_MIN_VOTES, DEFAULT_MIN_RATING, DEFAULT_MIN_VOTES } from "../config.js";
+import { registerPrompts } from "./prompts.js";
 import { MOODS, MOOD_NAMES } from "../shelf/moods.js";
 import { IMDB_GENRES } from "../shelf/genres.js";
 import {
@@ -259,6 +260,8 @@ export function createMcpServer(service: ShelfService): McpServer {
     },
     (args) => run(() => service.listWatchlist(args)),
   );
+
+  registerPrompts(server);
 
   return server;
 }

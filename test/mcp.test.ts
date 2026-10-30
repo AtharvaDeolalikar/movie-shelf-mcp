@@ -549,4 +549,21 @@ describe("MCP server", () => {
       assert.equal((await call("remove_from_watchlist", { imdb_id: "tt0000012" })).removed, false);
     });
   });
+
+  describe("prompts", () => {
+    it("lists the shortcut prompts", async () => {
+      const { prompts } = await client.listPrompts();
+      assert.deepEqual(prompts.map((p) => p.name).sort(), ["binge-series", "from-watchlist", "pick-something", "tonight"]);
+    });
+
+    it("renders arguments into the prompt text", async () => {
+      const text = async (name: string, args?: Record<string, string>) => {
+        const c = (await client.getPrompt({ name, arguments: args })).messages[0]?.content;
+        assert.equal(c?.type, "text");
+        return c?.type === "text" ? c.text : "";
+      };
+      assert.match(await text("binge-series", { language: "Korean", genre: "Crime" }), /type="series".*language="Korean".*genre="Crime"/);
+      assert.match(await text("tonight"), /type="movie"/);
+    });
+  });
 });
